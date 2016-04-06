@@ -51,18 +51,21 @@ def groupModels(modelInfos, models):
     return groups
 
 def distantProb(prob_1, prob_2):
-    return np.power(prob_1 - prob_2, 2).mean()
+    tmp = np.power(prob_1 - prob_2, 2)
+    return tmp.mean(), tmp.var()
 
 def checkModelConvergence(models, _X):
     probX = {mkey: models[mkey].predict_proba(_X) for mkey in models}
 
-    d = 0
+    d, v = 0, 0
     for mkey_1 in probX:
         for mkey_2 in probX:
             if (mkey_1 != mkey_2):
-                d += distantProb(probX[mkey_1], probX[mkey_2])
+                td, tv = distantProb(probX[mkey_1], probX[mkey_2])
+                d += td
+                v += tv
 
     nmodels = len(probX.keys())
     if (nmodels == 2):
-        return d
-    return d / ((nmodels - 1) * (nmodels - 2))
+        return d, v
+    return d / ((nmodels - 1) * (nmodels - 2)), v / ((nmodels - 1) * (nmodels - 2))
