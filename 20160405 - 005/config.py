@@ -54,6 +54,7 @@ folder_results = '6. Results'
 file_segment_address_result = 'full_address_results.xlsx'
 file_term_classify_result = 'term_results.xlsx'
 file_model_result = 'test_model_results.xlsx'
+file_model_details = 'test_model_details.xlsx'
 
 folder_running_logs = 'running_logs'
 file_log = 'logs.xlsx' # csv
@@ -61,7 +62,7 @@ file_log = 'logs.xlsx' # csv
 # ==============================================
 
 # number of executive run.py
-nrun = 5
+nrun = 1
 
 tmp = loadJson(folder_datasource + '/' + files_dictionary)
 nameTermSet = tmp['name-term-set']
@@ -132,7 +133,7 @@ model_config = {
     'layers': [(100, 'Sigmoid'), (3, 'Softmax')],
     'learning_rate': 0.01,
     'learning_rule': 'adagrad',
-    'n_iter': 300
+    'n_iter': 10
 }
 file_model_info = 'model_info'
 
@@ -154,6 +155,9 @@ template_rm_filters = {
 # Testing Model
 standard_data = True
 nTesting = 10
+
+alpha = 0.05
+delta_threshold = 0.001
 
 skip_punctuation = ' .'
 rm_preprocessed_punctuation = """ ,"""
